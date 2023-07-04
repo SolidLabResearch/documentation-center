@@ -13,6 +13,10 @@
 1. Install [mkdocs](https://www.mkdocs.org/)
 2. `mkdocs serve`
 
+### Update GitHub pages
+
+1. `mkdocs gh-deploy`
+
 ## License
 
 This code is copyrighted by [Ghent University – imec](http://idlab.ugent.be/) and 
