@@ -1,0 +1,17 @@
+site_name: SolidLab Documentation
+theme:
+  name: material
+  icon:
+    logo: fontawesome/solid/s
+  features:
+    - navigation.tabs
+plugins:
+  - search
+nav:
+  - Welcome: index.md
+  - getting-started.md
+  - tutorials.md
+  - tools-libraries.md
+  - Challenge reports: challenge-reports/index.md
+  - terminology.md
+  - faq.md
