@@ -1,3 +1,8 @@
+---
+hide:
+  - navigation
+---
+
 # Challenge reports
 
 TODO: explain reports.

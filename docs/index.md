@@ -4,7 +4,7 @@ hide:
   - toc
 ---
 
-# SolidLab Documentation
+# SolidLab Documentation Center
 
 - [Getting started](./getting-started.md):
 get started with the Solid ecosystem with curated instructions for popular use cases.
