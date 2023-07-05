@@ -13,4 +13,7 @@ get started with the Solid ecosystem with curated instructions for popular use c
 - [Challenge reports](./challenge-reports/index.md): read the reports of our SolidLab challenges.
 - [FAQ](./faq.md): get answers to the most frequently asked questions.
 
+If you have any feedback, 
+please create a GitHub issue in [this repository](https://github.com/SolidLabResearch/documentation-center/issues).
+
 Find the latest updates of this website [here](./latest-updates.md).

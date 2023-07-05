@@ -5,6 +5,8 @@ theme:
     logo: fontawesome/solid/s
   features:
     - navigation.tabs
+    - announce.dismiss
+  custom_dir: overrides
 plugins:
   - search
 nav:
@@ -15,3 +17,5 @@ nav:
   - Challenge reports: challenge-reports/index.md
   - terminology.md
   - faq.md
+  - Provide feedback: https://github.com/SolidLabResearch/documentation-center/issues
+copyright: Copyright &copy; 2023 <a href="https://solidlab.be/">SolidLab Flanders</a>
