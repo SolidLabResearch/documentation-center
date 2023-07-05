@@ -5,6 +5,6 @@
     "node-fetch-commonjs": "^3.3.1"
   },
   "scripts": {
-    "start": "node download-reports.js && node download-faq.js && node download-tutorials.js"
+    "start": "node download-reports.js && node download-faq.js && node download-tutorials.js && node download-tools-libraries.js"
   }
 }
