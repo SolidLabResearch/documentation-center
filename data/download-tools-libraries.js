@@ -16,6 +16,10 @@ async function generateToolsLibrariesList() {
       
     ?repo schema:targetProduct ?application;
       schema:codeRepository ?url.
+      
+    OPTIONAL {
+      ?application schema:softwareHelp ?docs
+    }
   }`, {
     sources: ['https://data.knows.idlab.ugent.be/person/office/software',
       'https://data.knows.idlab.ugent.be/person/office/external-software'],
@@ -24,10 +28,16 @@ async function generateToolsLibrariesList() {
   let bindings = await bindingsStream.toArray();
 
   bindings = bindings.map(binding => {
+    let description = binding.get('description').value.trim();
+    if (!description.endsWith('.')) {
+      description += '.';
+    }
+
     return {
       url: binding.get('url').id,
       title: binding.get('title').value,
-      description: binding.get('description').value
+      description,
+      docs: binding.get('docs') ? binding.get('docs').id : undefined
     }
   });
 
@@ -47,7 +57,13 @@ async function generateToolsLibrariesList() {
   let markdown = '';
 
   for (const binding of bindings) {
-    markdown += `- [${binding.title}](${binding.url}): ${binding.description}\n`;
+    markdown += `- [${binding.title}](${binding.url}): ${binding.description}`;
+
+    if (binding.docs) {
+      markdown += ` You find the documentation [here](${binding.docs}).`;
+    }
+
+    markdown += '\n';
   }
 
   let tutorialsTemplate = await fs.readFile('templates/tools-libraries.md', 'utf8');
