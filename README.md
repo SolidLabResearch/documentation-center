@@ -15,6 +15,7 @@
 
 ### Update GitHub pages
 
+1. Download the latest data via `cd data && npm start && cd ..`
 1. `mkdocs gh-deploy`
 
 ## License
