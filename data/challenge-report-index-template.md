@@ -5,7 +5,11 @@ hide:
 
 # Challenge reports
 
-TODO: explain reports.
+[SolidLab Challenges](https://github.com/SolidLabResearch/Challenges/) are technological challenges with 
+a clear scope and expected outcome 
+that someone should be able to resolve in maximum 3 months.
+Once a challenge is completed, we write a report about it that includes
+the solution, important technological decisions and assumptions, follow-up actions and future work.
 
 ## All reports
 
