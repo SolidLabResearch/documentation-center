@@ -16,7 +16,7 @@ async function generateMarkdownFile() {
   const reports = await generateReportList();
   const actions = await generateFollowUpActionsList();
 
-  let indexTemplate = await fs.readFile('challenge-report-index-template.md', 'utf8');
+  let indexTemplate = await fs.readFile('templates/challenge-report-index.md', 'utf8');
   indexTemplate = indexTemplate.replace('{{{LIST_ALL_REPORTS}}}', reports);
   indexTemplate = indexTemplate.replace('{{{LIST_ACTIONS}}}', actions);
   fs.writeFile('../docs/challenge-reports/index.md', indexTemplate);

@@ -23,7 +23,7 @@ async function main() {
   const bindings = await bindingsStream.toArray();
   const markdown = generateText(bindings);
 
-  let template = await fs.readFile('faq-template.md', 'utf8');
+  let template = await fs.readFile('templates/faq.md', 'utf8');
   template = template.replace('{{{FAQ_TEXT}}}', markdown);
   fs.writeFile('../docs/faq.md', template);
 }
