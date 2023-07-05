@@ -71,9 +71,25 @@ async function generateFollowUpActionsList() {
 function generateReportListMarkdown(bindings) {
   let markdown = '';
 
+  bindings = bindings.map(binding => {
+    return {
+      localUrl: binding.get('report').id.replace('https://github.com/SolidLabResearch/Challenges/blob/main/reports', '.'),
+      title: binding.get('title').value
+    }
+  });
+
+  bindings.sort((a, b) => {
+    if (a.title < b.title) {
+      return -1;
+    } else if (a.title > b.title) {
+      return 1;
+    }
+
+    return 0;
+  });
+
   for (const binding of bindings) {
-    const localUrl = binding.get('report').id.replace('https://github.com/SolidLabResearch/Challenges/blob/main/reports', '.');
-    markdown += `- [${binding.get('title').value}](${localUrl})\n`;
+    markdown += `- [${binding.title}](${binding.localUrl})\n`;
   }
 
   return markdown;
