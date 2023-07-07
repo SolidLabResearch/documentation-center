@@ -27,7 +27,8 @@ async function generateReportList() {
   PREFIX schema: <http://schema.org/>
   SELECT * WHERE {
     ?report a schema:Report;
-      schema:name ?title. 
+      schema:name ?title;
+      schema:dateCreated ?date.
   }`, {
     sources: ['https://data.knows.idlab.ugent.be/person/office/solidlab-challenges'],
   });
@@ -38,7 +39,7 @@ async function generateReportList() {
   // Download Markdown files
   for (const binding of bindings) {
     const localUrl = binding.get('report').id.replace('https://github.com/SolidLabResearch/Challenges/blob/main/reports', '../docs/challenge-reports');
-    downloadMarkdownFile(binding.get('report').id, localUrl);
+    downloadMarkdownFile(binding.get('report').id, localUrl, binding.get('report').id);
   }
 
   downloadImages();
@@ -73,8 +74,10 @@ function generateReportListMarkdown(bindings) {
 
   bindings = bindings.map(binding => {
     return {
+      permalink: binding.get('report').id,
       localUrl: binding.get('report').id.replace('https://github.com/SolidLabResearch/Challenges/blob/main/reports', '.'),
-      title: binding.get('title').value
+      title: binding.get('title').value,
+      date: binding.get('date').value
     }
   });
 
@@ -89,7 +92,7 @@ function generateReportListMarkdown(bindings) {
   });
 
   for (const binding of bindings) {
-    markdown += `- [${binding.title}](${binding.localUrl})\n`;
+    markdown += `- [${binding.title}](${binding.localUrl}) (${binding.date}, [permalink](${binding.permalink}))\n`;
   }
 
   return markdown;
@@ -168,10 +171,12 @@ function generateFollowUpActionSection(list, title) {
   return markdown;
 }
 
-async function downloadMarkdownFile(url, outputPath) {
+async function downloadMarkdownFile(url, outputPath, permalink) {
   url = url.replace('blob', 'raw');
   const response = await fetch(url);
-  const markdown = await response.text();
+  let markdown = await response.text();
+  markdown = markdown.replace('\n', ` ([permalink](${permalink}));
+`)
   fs.writeFile(outputPath, markdown);
 }
 
