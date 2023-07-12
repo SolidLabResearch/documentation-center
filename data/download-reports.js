@@ -19,27 +19,45 @@ async function generateMarkdownFile() {
   let indexTemplate = await fs.readFile('templates/challenge-report-index.md', 'utf8');
   indexTemplate = indexTemplate.replace('{{{LIST_ALL_REPORTS}}}', reports);
   indexTemplate = indexTemplate.replace('{{{LIST_ACTIONS}}}', actions);
+  await fs.ensureDir('../docs/challenge-reports');
   fs.writeFile('../docs/challenge-reports/index.md', indexTemplate);
 }
 
 async function generateReportList() {
+  const creatorDataSources = await getReportDataSources();
+  const sources = [
+    'https://data.knows.idlab.ugent.be/person/office/solidlab-challenges',
+    'https://data.knows.idlab.ugent.be/person/office/employees-extra'].concat(creatorDataSources);
   const bindingsStream = await myEngine.queryBindings(`
   PREFIX schema: <http://schema.org/>
-  SELECT * WHERE {
+  PREFIX knows: <https://data.knows.idlab.ugent.be/person/office/#>
+  SELECT ?report ?title ?challenge ?date ?solution ?solutionCreator(SAMPLE(?challengeCreator) as ?challengeCreatorName) (SAMPLE(?reportCreator) as ?reportCreatorName) (SAMPLE(?solutionCreator) as ?solutionCreatorName) WHERE {
     ?report a schema:Report;
-      schema:name ?title;
-      schema:dateCreated ?date.
-  }`, {
-    sources: ['https://data.knows.idlab.ugent.be/person/office/solidlab-challenges'],
+            schema:name ?title;
+            schema:creator [schema:name ?reportCreator];
+            schema:dateCreated ?date;
+            schema:about ?challenge.
+    
+    ?challenge schema:creator [schema:name ?challengeCreator];
+        knows:solution ?solution.
+    
+    ?solution schema:creator [schema:name ?solutionCreator].
+  } GROUP BY ?report ?title ?date ?solution ?challenge ?solutionCreator`, {
+    sources
   });
 
   const bindings = await bindingsStream.toArray();
-  const markdown = generateReportListMarkdown(bindings);
+  const reports = mergeDuplicateReports(bindings);
+  const markdown = generateReportListMarkdown(reports);
 
   // Download Markdown files
-  for (const binding of bindings) {
-    const localUrl = binding.get('report').id.replace('https://github.com/SolidLabResearch/Challenges/blob/main/reports', '../docs/challenge-reports');
-    downloadMarkdownFile(binding.get('report').id, localUrl, binding.get('report').id);
+  for (const report of reports) {
+    const localUrl = report.permalink.replace('https://github.com/SolidLabResearch/Challenges/blob/main/reports', '../docs/challenge-reports');
+    downloadMarkdownFile(report.permalink, localUrl, report.permalink, {
+      challenge: report.challengeCreators,
+      solution: report.solutionCreators,
+      report: report.reportCreators
+    });
   }
 
   downloadImages();
@@ -69,19 +87,10 @@ async function generateFollowUpActionsList() {
   return markdown;
 }
 
-function generateReportListMarkdown(bindings) {
+function generateReportListMarkdown(reports) {
   let markdown = '';
 
-  bindings = bindings.map(binding => {
-    return {
-      permalink: binding.get('report').id,
-      localUrl: binding.get('report').id.replace('https://github.com/SolidLabResearch/Challenges/blob/main/reports', '.'),
-      title: binding.get('title').value,
-      date: binding.get('date').value
-    }
-  });
-
-  bindings.sort((a, b) => {
+  reports.sort((a, b) => {
     if (a.title < b.title) {
       return -1;
     } else if (a.title > b.title) {
@@ -91,8 +100,8 @@ function generateReportListMarkdown(bindings) {
     return 0;
   });
 
-  for (const binding of bindings) {
-    markdown += `- [${binding.title}](${binding.localUrl}) (${binding.date}, [permalink](${binding.permalink}))\n`;
+  for (const report of reports) {
+    markdown += `- [${report.title}](${report.localUrl}) (${report.date}, [permalink](${report.permalink}))\n`;
   }
 
   return markdown;
@@ -171,15 +180,96 @@ function generateFollowUpActionSection(list, title) {
   return markdown;
 }
 
-async function downloadMarkdownFile(url, outputPath, permalink) {
+async function downloadMarkdownFile(url, outputPath, permalink, creators) {
   url = url.replace('blob', 'raw');
   const response = await fetch(url);
   let markdown = await response.text();
-  markdown = markdown.replace('\n', ` ([permalink](${permalink}));
-`)
+  const lines = markdown.split('\n');
+
+  for (let i = 0; i < lines.length; i ++) {
+    if (lines[i].startsWith('# ')) {
+      lines[i] += ` ([permalink](${permalink}))`;
+      break;
+    }
+  }
+
+  markdown = lines.join('\n');
+  markdown +=
+    `\n## Contributors
+     
+- Challenge: ${creators.challenge.join(', ')}
+- Solution: ${creators.solution.join(', ')}
+- Report: ${creators.report.join(', ')}`;
+
   fs.writeFile(outputPath, markdown);
 }
 
 function downloadImages() {
   exec(`rm -rf challenges-git && rm -rf ../docs/challenge-reports/img && mkdir ../docs/challenge-reports/img && git clone https://github.com/SolidLabResearch/Challenges.git challenges-git && cd challenges-git/reports/ && cp -r img/* ../../../docs/challenge-reports/img`);
+}
+
+async function getReportDataSources() {
+  let bindingsStream = await myEngine.queryBindings(`
+  PREFIX schema: <http://schema.org/>
+  PREFIX knows: <https://data.knows.idlab.ugent.be/person/office/#>
+  SELECT DISTINCT ?creator WHERE {
+    ?report a schema:Report.
+    
+    {?report schema:creator ?creator.}
+    UNION
+    {?report schema:about [schema:creator ?creator]}
+    UNION
+    {?report schema:about [knows:solution [schema:creator ?creator]]}
+  } `, {
+    sources: [
+      'https://data.knows.idlab.ugent.be/person/office/solidlab-challenges']
+  });
+
+  const bindings = await bindingsStream.toArray();
+  const results = bindings.map(b => b.get('creator').id);
+  return results;
+}
+
+function mergeDuplicateReports(bindings) {
+  const reports = {};
+  const reportIds = [];
+
+  for (const binding of bindings) {
+    const id = binding.get('report').id;
+
+    if (reportIds.includes(id)) {
+      const report = reports[id];
+
+      if (!report.challengeCreators.includes(binding.get('challengeCreatorName').value)) {
+        report.challengeCreators.push(binding.get('challengeCreatorName').value);
+      }
+
+      if (!report.reportCreators.includes(binding.get('reportCreatorName').value)) {
+        report.reportCreators.push(binding.get('reportCreatorName').value);
+      }
+
+      if (!report.solutionCreators.includes(binding.get('solutionCreatorName').value)) {
+        report.solutionCreators.push(binding.get('solutionCreatorName').value);
+      }
+
+      if (!report.solutions.includes(binding.get('solution').id)) {
+        report.solutions.push(binding.get('solution').id);
+      }
+    } else {
+      reportIds.push(id);
+      reports[id] = {
+        permalink: id,
+        localUrl: id.replace('https://github.com/SolidLabResearch/Challenges/blob/main/reports', '.'),
+        title: binding.get('title').value,
+        date: binding.get('date').value,
+        challenge: binding.get('challenge').id,
+        solutions: [binding.get('solution').id],
+        challengeCreators: [binding.get('challengeCreatorName').value],
+        reportCreators: [binding.get('reportCreatorName').value],
+        solutionCreators: [binding.get('solutionCreatorName').value]
+      };
+    }
+  }
+
+  return Object.values(reports);
 }
