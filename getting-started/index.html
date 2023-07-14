@@ -60,6 +60,11 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
+        
+        <a href="#getting-started" class="md-skip">
+          Skip to content
+        </a>
+      
     </div>
     <div data-md-component="announce">
       
@@ -272,7 +277,9 @@ Important: this is an initial version of our documentation center. Expect a lot 
           
             
               
-              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" hidden>
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
                     
@@ -322,10 +329,43 @@ Important: this is an initial version of our documentation center. Expect a lot 
       <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
       
       
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          Getting started
+          <span class="md-nav__icon md-icon"></span>
+        </label>
       
       <a href="./" class="md-nav__link md-nav__link--active">
         Getting started
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-solid-web-app-via-template" class="md-nav__link">
+    Create Solid Web app via template
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
       
     </li>
   
@@ -429,6 +469,8 @@ Important: this is an initial version of our documentation center. Expect a lot 
             
             
               
+                
+              
               <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
                 <div class="md-sidebar__scrollwrap">
                   <div class="md-sidebar__inner">
@@ -438,6 +480,23 @@ Important: this is an initial version of our documentation center. Expect a lot 
   
   
   
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#create-solid-web-app-via-template" class="md-nav__link">
+    Create Solid Web app via template
+  </a>
+  
+</li>
+      
+    </ul>
   
 </nav>
                   </div>
@@ -452,11 +511,22 @@ Important: this is an initial version of our documentation center. Expect a lot 
                   
 
 
-  <h1>Getting started</h1>
+<h1 id="getting-started">Getting started</h1>
+<h2 id="create-solid-web-app-via-template">Create Solid Web app via template</h2>
+<p>We created a <a href="https://github.com/SolidLabResearch/solid-web-app-template">template</a> that 
+helps you to get started with a Solid Web app.
+It has the following features:</p>
+<ul>
+<li><a href="https://github.com/CommunitySolidServer/CommunitySolidServer">Community Solid Server</a> to test with pods locally.</li>
+<li><a href="https://comunica.dev/">Comunica</a> for querying pods and other data sources.</li>
+<li><a href="https://github.com/inrupt/solid-client-authn-js">Solid Authentication library</a>
+  for authenticating with an identity provider.</li>
+<li><a href="https://webpack.js.org/">webpack</a> to bundle the JavaScript.</li>
+</ul>
 
 
 
-
+  
 
 
 
