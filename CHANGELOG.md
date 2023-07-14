@@ -22,5 +22,5 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Initial content
 - GitHub pages deployment
 
-[0.0.2]: 
+[0.0.2]: https://github.com/SolidLabResearch/documentation-center/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/SolidLabResearch/documentation-center/releases/tag/v0.0.1
