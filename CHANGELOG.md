@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+- Add Solid service template to Getting started page 
+
 ## [0.0.3] - 2023-07-19
 
 ### Added
