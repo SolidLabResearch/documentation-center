@@ -363,6 +363,13 @@ Important: this is an initial version of our documentation center. Expect a lot 
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#create-solid-service-via-template" class="md-nav__link">
+    Create Solid service via template
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -496,6 +503,13 @@ Important: this is an initial version of our documentation center. Expect a lot 
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#create-solid-service-via-template" class="md-nav__link">
+    Create Solid service via template
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -523,6 +537,23 @@ It has the following features:</p>
   for authenticating with an identity provider.</li>
 <li><a href="https://webpack.js.org/">webpack</a> to bundle the JavaScript.</li>
 </ul>
+<h2 id="create-solid-service-via-template">Create Solid service via template</h2>
+<p>We created a <a href="https://github.com/SolidLabResearch/solid-service-template">template</a> that
+helps you to get started with a Solid service.
+It has the following features:</p>
+<ul>
+<li><a href="https://github.com/CommunitySolidServer/CommunitySolidServer">Community Solid Server</a> (CSS) to test with pods locally.</li>
+<li><a href="https://comunica.dev/">Comunica</a> for querying pods and other data sources.</li>
+</ul>
+<p>We rely on the <a href="https://communitysolidserver.github.io/CommunitySolidServer/6.x/usage/client-credentials/">Client Credentials</a>
+offered by the CSS.
+The advantage is that it allows the service to work without user interaction for authentication.
+The disadvantage is that it doesn't work with other Solid servers.
+This only applies to authentication.
+Once authentication is done,
+everything else works as expected when you follow the Solid protocol.
+When there is a specification on how to do this type of authentication with every Solid server,
+we will update this template.</p>
 
 
 
