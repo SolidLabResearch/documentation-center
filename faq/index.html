@@ -493,6 +493,13 @@ Important: this is an initial version of our documentation center. Expect a lot 
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-to-get-all-webids-that-are-registered-with-an-idp" class="md-nav__link">
+    How to get all WebIDs that are registered with an IDP?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     References
   </a>
@@ -621,6 +628,13 @@ Important: this is an initial version of our documentation center. Expect a lot 
 </li>
       
         <li class="md-nav__item">
+  <a href="#how-to-get-all-webids-that-are-registered-with-an-idp" class="md-nav__link">
+    How to get all WebIDs that are registered with an IDP?
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#references" class="md-nav__link">
     References
   </a>
@@ -661,14 +675,14 @@ For example, if the WebID is <code>http://example.com/profile/card#me</code>
 then you can't conclude that the pod is at <code>http://example.com/</code> or <code>http://example.com/profile/</code>.</p>
 <p>You cannot determine what type of access someone has based on the similarity
 between the url of a resource (on a pod) and the url of their WebID.
-For example, if the WebID is http://example.com/profile/card#me
-then you can't conclude that the user has access to the resources http://example.com/ or http://example.com/private/.</p>
+For example, if the WebID is <code>http://example.com/profile/card#me</code>
+then you can't conclude that the user has access to the resources <code>http://example.com/</code> or <code>http://example.com/private/</code>.</p>
 <h2 id="do-an-idp-and-a-pod-need-to-have-the-same-domain">Do an IDP and a pod need to have the same domain?</h2>
 <p>No. They can have different domains.
 They can be hosted on different servers as well.</p>
 <p>You cannot determine the pod of user based on their IDP.
-For example, if the IDP is http://example.com/idp
-then you can't conclude that the pod is at http://example.com/ or http://example.com/pod/.</p>
+For example, if the IDP is <code>http://example.com/idp</code>
+then you can't conclude that the pod is at <code>http://example.com/</code> or <code>http://example.com/pod/</code>.</p>
 <p>The Community Solid Server (CSS) can be used as both an IDP and pod,
 but this is not required.
 Users can use CSS for only the IDP functionality or only the pod functionality.</p>
@@ -683,15 +697,31 @@ look for the predicate <code>pim:storage</code>.
 This predicate is not a requirement for a WebID.</p>
 <h2 id="how-to-get-a-webid-via-an-idp">How to get a WebID via an IDP?</h2>
 <p>After logging in some libraries, such as the <a href="https://github.com/inrupt/solid-client-authn-js">Inrupt authentication library</a>,
-provide the WebID.</p>
+provide the WebID of the logged-in user.</p>
 <h2 id="how-to-get-a-webid-via-a-pod">How to get a WebID via a pod?</h2>
-<p>You can't do that. (?)</p>
+<p>If the pod wants to advertise the owner, then 
+the owner's WebID is included in the Link header with <code>rel="http://www.w3.org/ns/solid/terms#owner"</code> in the response to 
+HTTP HEAD and GET requests. 
+See the <a href="https://solidproject.org/TR/protocol#storage-resource">Solid Protocol</a> for more details.
+This means that the pod can share this information, but it is not required.
+This also means that information about WebIDs that are not owners is not available.
+These non-owners might still have access to specific resources on the pod.</p>
 <h2 id="how-to-get-an-idp-via-a-pod">How to get an IDP via a pod?</h2>
-<p>You can't do that. (?)</p>
+<p>You can't do that directly via the pod. 
+But using the answer to the question "How to get a WebID via a pod?"
+you might be able to determine the WebID of the owner.
+Next you dereference the url of the WebID and 
+look for the predicate <code>solid:iodcIssuer</code>.</p>
 <h2 id="how-to-get-a-pod-via-an-idp">How to get a pod via an IDP?</h2>
-<p>You can't do that. (?)</p>
+<p>You can't do that directly via the IDP.
+But using the answer to the question "How to get a WebID via an IDP?"
+you might be able to determine the WebID after logging in.
+Next you dereference the url of the WebID and
+look for the predicate <code>pim:storage</code>.</p>
+<h2 id="how-to-get-all-webids-that-are-registered-with-an-idp">How to get all WebIDs that are registered with an IDP?</h2>
+<p>You can't do that.</p>
 <h2 id="references">References</h2>
-<p>https://solidlab.be/wp-content/uploads/2023/01/End-user-identity-in-Solid.pdf</p>
+<p><a href="https://solidlab.be/wp-content/uploads/2023/01/End-user-identity-in-Solid.pdf">https://solidlab.be/wp-content/uploads/2023/01/End-user-identity-in-Solid.pdf</a></p>
 <h2 id="query-faq-yourself">Query FAQ yourself</h2>
 <p>You can query the frequently asked questions and their answers yourself via the data at
 <a href="https://data.knows.idlab.ugent.be/person/office/solid-faq">https://data.knows.idlab.ugent.be/person/office/solid-faq</a>.</p>
