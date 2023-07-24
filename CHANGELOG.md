@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Updated
+- Info Solid Web app template
+
 ## [0.0.5] - 2023-07-20
 
 ### Fixed

@@ -16,6 +16,7 @@ It has the following features:
 - [Solid Authentication library](https://github.com/inrupt/solid-client-authn-js)
   for authenticating with an identity provider.
 - [webpack](https://webpack.js.org/) to bundle the JavaScript.
+- [Cypress](https://www.cypress.io/) to test our app.
 
 ## Create Solid service via template
 
