@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+### Added
+- Add link to Pod Playground (see [issue 8](https://github.com/SolidLabResearch/documentation-center/issues/8))
+
 ## [0.0.6] - 2023-07-24
 
 ### Updated

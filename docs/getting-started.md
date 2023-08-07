@@ -36,3 +36,13 @@ Once authentication is done,
 everything else works as expected when you follow the Solid protocol.
 When there is a specification on how to do this type of authentication with every Solid server,
 we will update this template.
+
+## Try out Solid pods with the SolidLab Pod Playground
+
+We offer a [public instance](https://pod.playground.solidlab.be/) 
+of the latest [Community Solid Server](https://github.com/CommunitySolidServer/CommunitySolidServer) release.
+Users can use this instance to freely test and experiment with Solid pods.
+This is useful, for example, for testing or demoing applications.
+The pods and data on the instance is removed daily and
+there are no guarantees regarding uptime.
+Thus, do not use this instance for automated tests and in production.
