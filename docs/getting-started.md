@@ -18,6 +18,9 @@ It has the following features:
 - [webpack](https://webpack.js.org/) to bundle the JavaScript.
 - [Cypress](https://www.cypress.io/) to test our app.
 
+We also have a [template](https://github.com/SolidLabResearch/solid-web-app-react-template) that 
+uses [React](https://react.dev/).
+
 ## Create Solid service via template
 
 We created a [template](https://github.com/SolidLabResearch/solid-service-template) that
