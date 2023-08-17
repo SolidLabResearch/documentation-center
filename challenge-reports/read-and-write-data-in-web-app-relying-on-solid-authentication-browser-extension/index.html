@@ -550,9 +550,9 @@ You can reuse the pitch of the challenge, but check if you need to make changes.
 For example, it might happen that the approved solution does more than what the original pitch requested.
 -->
 
-<p>The goal of <a href="https://github.com/KNowledgeOnWebScale/solid-authentication-browser-extension/">this browser extension</a> is that requests are 
-automatically authenticated when needed. 
-Using this we can show that a Web app can be created that reads data from and stores data 
+<p>The goal of <a href="https://github.com/KNowledgeOnWebScale/solid-authentication-browser-extension/">this browser extension</a> is
+that requests are automatically authenticated when needed.
+Using this we can show that a Web app can be created that reads data from and stores data
 in a protected resources in a pod without the need for including Solid authentication in the Web app.</p>
 <h2 id="approved-solution">Approved solution</h2>
 <!--
@@ -560,7 +560,7 @@ Provide information about the approved solution:
 names of tools/libraries created, repos, and so on.
 -->
 
-<p>We developed a <a href="https://github.com/SolidLabResearch/markdown-editor">Web app</a> that allows 
+<p>We developed a <a href="https://github.com/SolidLabResearch/markdown-editor">Web app</a> that allows
 users to edit Markdown files using only GET and PUT requests.
 It has the following features:</p>
 <ul>
@@ -570,16 +570,18 @@ It has the following features:</p>
 <li>WebID and browser extension are not needed when working with public resources.</li>
 <li>Show urls of most recent files. The urls are stored in the browser storage.</li>
 </ul>
-<p>You find a live version of the app <a href="https://solidlabresearch.github.io/markdown-editor/">here</a> and 
+<p>You find a live version of the app <a href="https://solidlabresearch.github.io/markdown-editor/">here</a> and
 a screencast of the app <a href="https://cloud.ilabt.imec.be/index.php/s/JcqFbRzNMFztC8D">here</a>.</p>
 <!--
 Provide a list of important technical decisions and assumptions.
 -->
-<p>We made the following important technological decisions and assumptions:
-- The tool relies on the Solid authentication browser extension for requests that required authentication. 
-No fallback is provided for when the extension is not installed. 
-- The user knows where a new resource should be stored on the pod. 
-They manually provide the full URL of the resource in a text-field.</p>
+<p>We made the following important technological decisions and assumptions:</p>
+<ul>
+<li>The tool relies on the Solid authentication browser extension for requests that required authentication.
+No fallback is provided for when the extension is not installed.</li>
+<li>The user knows where a new resource should be stored on the pod.
+They manually provide the full URL of the resource in a text-field.</li>
+</ul>
 <h2 id="user-flow">User flow</h2>
 <!--
 Describe a concrete user flow with the approved solution.
@@ -594,31 +596,38 @@ Complete the following sections:
 <h3 id="preconditions">Preconditions</h3>
 <ul>
 <li>The user has Node.js installed.</li>
-<li>The user has <a href="https://github.com/KNowledgeOnWebScale/solid-authentication-browser-extension/commit/bd8d9f8466382b637a640ec2ec11caccdecafc41">this version</a> of 
-the Solid authentication browser extension installed.</li>
+<li>The user has
+<a href="https://github.com/KNowledgeOnWebScale/solid-authentication-browser-extension/commit/bd8d9f8466382b637a640ec2ec11caccdecafc41">this version</a>
+of the Solid authentication browser extension installed.</li>
 <li>The user has a WebID and pod.
 You can create both for testing via the <a href="https://pod.playground.solidlab.be/">Pod Playground of SolidLab</a>.</li>
 <li>The user has logged in with their WebID in the browser extension.</li>
 </ul>
 <h3 id="steps">Steps</h3>
 <ol>
-<li>Clone <a href="https://github.com/SolidLabResearch/markdown-editor">the repo of the app</a> via
-   <code>shell
-   git clone https://github.com/SolidLabResearch/markdown-editor.git</code></li>
-<li>Install the dependencies via
-   <code>shell
-   npm i</code></li>
-<li>Start the server via
-   <code>shell
-   npm start</code></li>
-<li>Open Firefox and browse to http://localhost:8080/.</li>
+<li>Clone <a href="https://github.com/SolidLabResearch/markdown-editor">the repo of the app</a> via</li>
+</ol>
+<p><code>shell
+   git clone https://github.com/SolidLabResearch/markdown-editor.git</code></p>
+<ol>
+<li>Install the dependencies via</li>
+</ol>
+<p><code>shell
+   npm i</code></p>
+<ol>
+<li>Start the server via</li>
+</ol>
+<p><code>shell
+   npm start</code></p>
+<ol>
+<li>Open Firefox and browse to <a href="http://localhost:8080/">http://localhost:8080/</a>.</li>
 <li>In the text field at the top enter the URL for a new Markdown resource on your pod.</li>
 <li>Edit the Markdown file.</li>
 <li>The app automatically saves your changes.</li>
 </ol>
 <h3 id="postconditions">Postconditions</h3>
 <ul>
-<li>Open the resource in a new tab in your browser. 
+<li>Open the resource in a new tab in your browser.
   You don't need the app to see its content.
   Note that the <a href="https://github.com/CommunitySolidServer/CommunitySolidServer">Community Solid Server</a>
   will not show the Markdown file directly, but

@@ -551,22 +551,22 @@ You can reuse the pitch of the challenge, but check if you need to make changes.
 For example, it might happen that the approved solution does more than what the original pitch requested.
 -->
 
-<p>Data streams are becoming omnipresent and 
-are a crucial component in many use cases. 
-Storing streams in a low-cost file-based Web environment could be done using 
-<a href="https://semiceu.github.io/LinkedDataEventStreams/">Linked Data Event Streams</a> (LDES). 
-However, pushing large volumes of high volatile data into a Solid-based LDES is not possible because 
-the <a href="https://github.com/woutslabbinck/SolidEventSourcing">current solution</a> does the partitioning of the data 
-after all data has been retrieved, 
-instead of in a streaming fashion. 
-This crashes the <a href="https://github.com/CommunitySolidServer/CommunitySolidServer">Community Solid Server</a> 
-due to the high load on the server 
+<p>Data streams are becoming omnipresent and
+are a crucial component in many use cases.
+Storing streams in a low-cost file-based Web environment could be done using
+<a href="https://semiceu.github.io/LinkedDataEventStreams/">Linked Data Event Streams</a> (LDES).
+However, pushing large volumes of high volatile data into a Solid-based LDES is not possible because
+the <a href="https://github.com/woutslabbinck/SolidEventSourcing">current solution</a> does the partitioning of the data
+after all data has been retrieved,
+instead of in a streaming fashion.
+This crashes the <a href="https://github.com/CommunitySolidServer/CommunitySolidServer">Community Solid Server</a>
+due to the high load on the server
 when repartitioning large amounts of data.
 We use data from the <a href="https://dahcc.idlab.ugent.be/">DAHCC dataset</a> for this challenge,
 which contains data streams describing the behaviour of various patients.
 The streams contain over 100.000 events.</p>
-<p>We want a streaming Solid-based LDES connector that replays data and 
-partitions this data in a streaming fashion when retrieving the data, 
+<p>We want a streaming Solid-based LDES connector that replays data and
+partitions this data in a streaming fashion when retrieving the data,
 instead of needing to wait till the whole dataset is received.
 Besides avoid the high load on the server,
 replaying allows to mimic the real-time behaviour of data streams,
@@ -580,7 +580,7 @@ names of tools/libraries created, repos, and so on.
 -->
 
 <p>We developed a <a href="https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay/">tool</a> that
-replays captured streams. 
+replays captured streams.
 The tool has the following features:</p>
 <ul>
 <li>The tool is pull-based as it pulls the observations from n-triples files.</li>
@@ -588,7 +588,8 @@ The tool has the following features:</p>
 <li>If new buckets are required, the tool updates the LDES.</li>
 <li>The user can parameterize the bucket size.</li>
 </ul>
-<p>The repository contains both a <a href="https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay/tree/main/webapp">Web app</a> and
+<p>The repository contains both a
+<a href="https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay/tree/main/webapp">Web app</a> and
 a <a href="https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay/tree/main/engine">engine</a>, but
 only the engine is relevant for <a href="https://github.com/SolidLabResearch/Challenges/issues/82">challenge #82</a> and
 this report.</p>
@@ -604,14 +605,14 @@ Provide a list of important technical decisions and assumptions.
 <li>JavaScript/TypeScript as main development language to be in-line with current practices.</li>
 <li>LDES to represent a stream of events detected by IOT-related devices.</li>
 <li>Implements paginated to support loading large datasets.</li>
-<li>Data sources are N-triples files, as they represent the state of the devices and observations 
+<li>Data sources are N-triples files, as they represent the state of the devices and observations
   as originally persisted using <a href="https://arrow.apache.org/docs/python/feather.html">Apache Feather</a>.</li>
-<li>Single-user demonstration implementation, as the main goal is validating the approach, 
+<li>Single-user demonstration implementation, as the main goal is validating the approach,
   not developing a industry-ready implementation.</li>
 <li><a href="https://www.npmjs.com/package/n3">N3.js</a> for streaming and high-throughput handling of RDF data.</li>
-<li>Implements recursive version of the <a href="https://en.wikipedia.org/wiki/Merge_sort">merge sort algorithm</a> 
+<li>Implements recursive version of the <a href="https://en.wikipedia.org/wiki/Merge_sort">merge sort algorithm</a>
   to sort the observation based on timestamp (configurable).</li>
-<li>Implements pointer-based algorithm to keep track of last observation/event that has been replayed. 
+<li>Implements pointer-based algorithm to keep track of last observation/event that has been replayed.
   The pointer can be advanced according to either the ordering by the end-user or automatically.</li>
 <li>Implements optimisation to manage the size of the pods.</li>
 </ul>
@@ -628,86 +629,109 @@ Complete the following sections:
 <h3 id="preconditions">Preconditions</h3>
 <p>Configure the engine via the following steps:</p>
 <ol>
-<li>Clone <a href="https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay">the repository</a> via
-   <code>shell
-   git clone https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay</code></li>
-<li>Navigate to <code>LDES-in-SOLID-Semantic-Observations-Replay</code> via
-   <code>shell
-   cd LDES-in-SOLID-Semantic-Observations-Replay</code></li>
-<li>Start an instance of the Community Solid Server via
-   <code>shell
-   docker run --rm -p 3000:3000 -it solidproject/community-server:latest -c config/default.json</code></li>
-<li>Open a new terminal at the same location.</li>
-<li>Navigate to <code>engine</code> via
-   <code>shell
-   cd engine</code></li>
-<li>Install dependencies via
-   <code>shell
-   npm i</code></li>
-<li>Download the example DAHCC dataset via 
-   <code>shell
-   curl -L https://cloud.ilabt.imec.be/index.php/s/8BatNcg2iEyJktR/download -o data/dataset_participant1_100obs</code></li>
-<li>Set the value of <code>datasetFolders</code> to the full path of the folder <code>engine/data</code> in the file <code>src/config/replay_properties.json</code>.</li>
-<li>Start the engine via
-   <code>shell
-   npm start</code></li>
+<li>Clone <a href="https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay">the repository</a> via</li>
 </ol>
-<p>If you get an error, see the <a href="https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay#installation">README</a> of the repository.</p>
+<p><code>shell
+   git clone https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay</code></p>
+<ol>
+<li>Navigate to <code>LDES-in-SOLID-Semantic-Observations-Replay</code> via</li>
+</ol>
+<p><code>shell
+   cd LDES-in-SOLID-Semantic-Observations-Replay</code></p>
+<ol>
+<li>Start an instance of the Community Solid Server via</li>
+</ol>
+<p><code>shell
+   docker run --rm -p 3000:3000 -it solidproject/community-server:latest -c config/default.json</code></p>
+<ol>
+<li>Open a new terminal at the same location.</li>
+<li>Navigate to <code>engine</code> via</li>
+</ol>
+<p><code>shell
+   cd engine</code></p>
+<ol>
+<li>Install dependencies via</li>
+</ol>
+<p><code>shell
+   npm i</code></p>
+<ol>
+<li>Download the example DAHCC dataset via</li>
+</ol>
+<p><code>shell
+   curl -L https://cloud.ilabt.imec.be/index.php/s/8BatNcg2iEyJktR/download -o data/dataset_participant1_100obs</code></p>
+<ol>
+<li>Set the value of <code>datasetFolders</code> to the full path of the folder <code>engine/data</code> in
+the file <code>src/config/replay_properties.json</code>.</li>
+<li>Start the engine via</li>
+</ol>
+<p><code>shell
+   npm start</code></p>
+<p>If you get an error,
+see the <a href="https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay#installation">README</a>
+of the repository.</p>
 <h3 id="steps">Steps</h3>
 <ol>
-<li>Get all loadable datasets using a GET request via
-   <code>shell
-   curl http://localhost:3001/datasets</code>
-   You get something like
-   <code>shell
-   ["dataset_participant1_100obs","dataset_participant2_100obs"]</code></li>
-<li>Load a particular dataset using a GET request via
-   <code>shell
-   curl http://localhost:3001/loadDataset?dataset=dataset_participant1_100obs</code>
-   You get an empty result.</li>
-<li>Check the loading progress (in quad count) using a GET request via
-   <code>shell
-   curl http://localhost:3001/checkLoadingSize</code>
-   You get something like
-   <code>shell
-   [500]</code></li>
-<li>Get the actual observation count (quads / observation) using a GET request via
-   <code>shell
-   curl http://localhost:3001/checkObservationCount</code>
-   You get something like
-   <code>shell
-   [100]</code></li>
-<li>Sort the loaded observations (as according to the configured TreePath) using a GET request via
-   <code>shell
-   curl http://localhost:3001/sortObservations</code>
-   You get something like
-   <code>shell
-   [["https://dahcc.idlab.ugent.be/Protego/_participant1/obs0","https://dahcc.idlab.ugent.be/Protego/_participant1/obs1","https://dahcc.idlab.ugent.be/Protego/_participant1/obs2" ... ]]</code></li>
-<li>Get a sample (as in the configured chunk) set of observations using a GET request via
-   <code>shell
-   curl http://localhost:3001/getObservations</code>
-   You get something like
-   <code>shell
-   [{"termType":"NamedNode","value":"https://dahcc.idlab.ugent.be/Protego/_participant1/obs0"},{"termType":"NamedNode","value":"https://dahcc.idlab.ugent.be/Protego/_participant1/obs1"} ...}]</code></li>
-<li>
-<p>Replay one next observation using a GET request via
-   <code>shell
-   curl http://localhost:3001/advanceAndPushObservationPointer</code>
-   You get something like
-   <code>shell
-   [1]</code>
-   This represents the pointer to the next replayable observation.
-   Checking the LDES in the Solid pod (default: http://localhost:3000/test/),
+<li>Get all loadable datasets using a GET request via</li>
+</ol>
+<p><code>shell
+   curl http://localhost:3001/datasets</code></p>
+<p>You get something like</p>
+<p><code>shell
+   ["dataset_participant1_100obs","dataset_participant2_100obs"]</code></p>
+<ol>
+<li>Load a particular dataset using a GET request via</li>
+</ol>
+<p><code>shell
+   curl http://localhost:3001/loadDataset?dataset=dataset_participant1_100obs</code></p>
+<p>You get an empty result.
+3. Check the loading progress (in quad count) using a GET request via</p>
+<p><code>shell
+   curl http://localhost:3001/checkLoadingSize</code></p>
+<p>You get something like</p>
+<p><code>shell
+   [500]</code></p>
+<ol>
+<li>Get the actual observation count (quads / observation) using a GET request via</li>
+</ol>
+<p><code>shell
+   curl http://localhost:3001/checkObservationCount</code></p>
+<p>You get something like</p>
+<p><code>shell
+   [100]</code></p>
+<ol>
+<li>Sort the loaded observations (as according to the configured TreePath) using a GET request via</li>
+</ol>
+<p><code>shell
+   curl http://localhost:3001/sortObservations</code></p>
+<p>You get something like</p>
+<p><code>shell
+   [["https://dahcc.idlab.ugent.be/Protego/_participant1/obs0","https://dahcc.idlab.ugent.be/Protego/_participant1/obs1","https://dahcc.idlab.ugent.be/Protego/_participant1/obs2" ... ]]</code></p>
+<ol>
+<li>Get a sample (as in the configured chunk) set of observations using a GET request via</li>
+</ol>
+<p><code>shell
+   curl http://localhost:3001/getObservations</code></p>
+<p>You get something like</p>
+<p><code>shell
+   [{"termType":"NamedNode","value":"https://dahcc.idlab.ugent.be/Protego/_participant1/obs0"},{"termType":"NamedNode","value":"https://dahcc.idlab.ugent.be/Protego/_participant1/obs1"} ...}]</code></p>
+<ol>
+<li>Replay one next observation using a GET request via</li>
+</ol>
+<p><code>shell
+   curl http://localhost:3001/advanceAndPushObservationPointer</code></p>
+<p>You get something like</p>
+<p><code>shell
+   [1]</code></p>
+<p>This represents the pointer to the next replayable observation.
+   Checking the LDES in the Solid pod (default: <a href="http://localhost:3000/test/">http://localhost:3000/test/</a>),
    you should see at least two containers (the inbox and the LDES buckets),
    where the LDES buckets should now contain the replayed observation,
-   for example http://localhost:3000/test/1641197095000/aa28a2fa-010f-4b81-8f3c-a57f45e13758.</p>
-</li>
-<li>
-<p>Replay all remaining observations using a GET request via
-   <code>shell
-   curl http://localhost:3001/advanceAndPushObservationPointerToTheEnd</code></p>
-</li>
+   for example <a href="http://localhost:3000/test/1641197095000/aa28a2fa-010f-4b81-8f3c-a57f45e13758">http://localhost:3000/test/1641197095000/aa28a2fa-010f-4b81-8f3c-a57f45e13758</a>.</p>
+<ol>
+<li>Replay all remaining observations using a GET request via</li>
 </ol>
+<p><code>shell
+   curl http://localhost:3001/advanceAndPushObservationPointerToTheEnd</code></p>
 <h3 id="postconditions">Postconditions</h3>
 <p>All observations are in the pod.</p>
 <h2 id="follow-up-actions">Follow-up actions</h2>
@@ -725,11 +749,12 @@ You can create a new challenge/scenario for each idea.
 -->
 
 <ul>
-<li>Real-time replay including throttling. 
+<li>Real-time replay including throttling.
 Challenge <a href="https://github.com/SolidLabResearch/Challenges/issues/83">#83</a> is relevant,
 together with the <a href="https://github.com/SolidLabResearch/LDES-in-SOLID-Semantic-Observations-Replay#roadmap">roadmap</a>
 in the solution's repository.</li>
-<li>Elaborate filtering on the datasets used, such as selecting specific metrics that need to be replayed rather than the entire dataset.</li>
+<li>Elaborate filtering on the datasets used, such as selecting specific metrics that need to be replayed rather than
+the entire dataset.</li>
 <li>Improve the LDES in LDP approach, if possible.</li>
 </ul>
 <h2 id="contributors">Contributors</h2>

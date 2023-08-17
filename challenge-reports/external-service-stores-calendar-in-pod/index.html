@@ -547,10 +547,10 @@ Report writer:
 <p>The corresponding challenge is <a href="https://github.com/SolidLabResearch/Challenges/issues/68">#68</a>,
 which contributes to scenario <a href="https://github.com/SolidLabResearch/Challenges/issues/2">#2</a>.</p>
 <h2 id="problem">Problem</h2>
-<p>At the moment it's possible to request a calendar from a CSS instance through the use of 
-a <a href="https://github.com/KNowledgeOnWebScale/solid-calendar-store/">store</a>. 
-But this solution is coupled to the implementation of CSS. 
-A better solution would be to have an external service that reads the original calendar and 
+<p>At the moment it's possible to request a calendar from a CSS instance through the use of
+a <a href="https://github.com/KNowledgeOnWebScale/solid-calendar-store/">store</a>.
+But this solution is coupled to the implementation of CSS.
+A better solution would be to have an external service that reads the original calendar and
 stores it in a pod using only the methods specified by Solid.</p>
 <h2 id="approved-solution">Approved solution</h2>
 <!--
@@ -559,10 +559,10 @@ names of tools/libraries created, repos, and so on.
 -->
 
 <p>Oxford HCC developed an <a href="https://github.com/renyuneyun/calendar-orchestrator">orchestrator</a> that allows users to
-configure an automatic process that periodically retrieves their calendars, 
+configure an automatic process that periodically retrieves their calendars,
 converts them to RDF, and
 stores them on their pods.</p>
-<p>The repository contains both a <a href="https://github.com/renyuneyun/calendar-orchestrator/tree/main/app">frontend</a> and 
+<p>The repository contains both a <a href="https://github.com/renyuneyun/calendar-orchestrator/tree/main/app">frontend</a> and
 a <a href="https://github.com/renyuneyun/calendar-orchestrator/tree/main/core">backend</a>, but
 only the backend is relevant for <a href="https://github.com/SolidLabResearch/Challenges/issues/68">challenge #68</a> and
 this report.</p>
@@ -586,38 +586,46 @@ We assume for the steps below that the WebID is <code>https://pod.playground.sol
 <li>The user has a pod where the calendar and the configuration of the orchestrator can be stored.
 We assume for the steps below that the pod is located at <code>https://pod.playground.solidlab.be/ash/</code>,
 with <code>https://pod.playground.solidlab.be/</code> as identify provider.</li>
-<li>The WebID has a <code>http://www.w3.org/ns/pim/space#storage</code> triple. 
+<li>The WebID has a <code>http://www.w3.org/ns/pim/space#storage</code> triple.
 See the <a href="https://solid.github.io/webid-profile/#storage">Solid WebID Profile</a>.
-For the WebID <code>https://pod.playground.solidlab.be/ash/profile/card#me</code> we added the triple
-   <code>turtle
-    &lt;#me&gt; &lt;http://www.w3.org/ns/pim/space#storage&gt; &lt;https://pod.playground.solidlab.be/ash/&gt;.</code></li>
+For the WebID <code>https://pod.playground.solidlab.be/ash/profile/card#me</code> we added the triple</li>
+</ul>
+<p><code>turtle
+    &lt;#me&gt; &lt;http://www.w3.org/ns/pim/space#storage&gt; &lt;https://pod.playground.solidlab.be/ash/&gt;.</code></p>
+<ul>
 <li>The user has <a href="https://httpie.io/">HTTPie</a> installed on their local machine.</li>
 </ul>
 <h3 id="steps">Steps</h3>
 <ol>
-<li>Clone the <a href="https://github.com/renyuneyun/calendar-orchestrator">orchestrator</a> 
+<li>Clone the <a href="https://github.com/renyuneyun/calendar-orchestrator">orchestrator</a>
 via <code>git clone https://github.com/renyuneyun/calendar-orchestrator.git</code>.</li>
 <li>Navigate to the <code>core</code> folder via <code>cd calendar-orchestrator/core</code>.</li>
 <li>Install the dependencies via <code>npm i</code>.</li>
 <li>Run the orchestrator via <code>npm run build &amp;&amp; npm run start</code>.</li>
 <li>Open a new terminal.</li>
-<li>Register the user via
-   <code>shell 
-   http POST localhost:3000/user webid=https://pod.playground.solidlab.be/ash/profile/card#me issuer=https://pod.playground.solidlab.be/ email=ash@example.com password=ash</code></li>
-<li>Get the user's information via
-   <code>shell
-   http GET localhost:3000/user webid=https://pod.playground.solidlab.be/ash/profile/card#me</code></li>
-<li>Set user's calendar URL via
-   <code>shell
-   http POST localhost:3000/user webid=https://pod.playground.solidlab.be/ash/profile/card#me issuer=https://pod.playground.solidlab.be/ cal_url=http://localhost:8080/parties.ics</code></li>
-<li>Update user's calendar data
-   <code>shell
-   http POST localhost:3000/user webid=https://pod.playground.solidlab.be/ash/profile/card#me issuer=https://pod.playground.solidlab.be/</code></li>
+<li>Register the user via</li>
 </ol>
+<p><code>shell
+   http POST localhost:3000/user webid=https://pod.playground.solidlab.be/ash/profile/card#me issuer=https://pod.playground.solidlab.be/ email=ash@example.com password=ash</code></p>
+<ol>
+<li>Get the user's information via</li>
+</ol>
+<p><code>shell
+   http GET localhost:3000/user webid=https://pod.playground.solidlab.be/ash/profile/card#me</code></p>
+<ol>
+<li>Set user's calendar URL via</li>
+</ol>
+<p><code>shell
+   http POST localhost:3000/user webid=https://pod.playground.solidlab.be/ash/profile/card#me issuer=https://pod.playground.solidlab.be/ cal_url=http://localhost:8080/parties.ics</code></p>
+<ol>
+<li>Update user's calendar data</li>
+</ol>
+<p><code>shell
+   http POST localhost:3000/user webid=https://pod.playground.solidlab.be/ash/profile/card#me issuer=https://pod.playground.solidlab.be/</code></p>
 <h3 id="postconditions">Postconditions</h3>
 <p>Find the availability calendar at <code>https://pod.playground.solidlab.be/ash/availability</code>.
-This is a snippet of the calendar:
-   ```turtle
+This is a snippet of the calendar:</p>
+<p>```turtle
    @prefix schema: <a href="http://schema.org/">http://schema.org/</a> .</p>
 <p><a href="http://example.com/calendar/Combined%20of%20%5BParties%5D">http://example.com/calendar/Combined%20of%20%5BParties%5D</a>
      schema:name "Combined of [Parties]" ;

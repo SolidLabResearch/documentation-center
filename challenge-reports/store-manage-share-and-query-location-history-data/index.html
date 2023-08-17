@@ -545,23 +545,23 @@ Report writer:
 <h1 id="store-manage-share-and-query-location-history-data-permalink">Store, manage, share and query location (history) data (<a href="https://github.com/SolidLabResearch/Challenges/blob/main/reports/store-manage-share-and-query-location-history-data.md">permalink</a>)</h1>
 <p>The corresponding challenge is <a href="https://github.com/SolidLabResearch/Challenges/issues/10">#10</a>.</p>
 <h2 id="problem">Problem</h2>
-<p>Your location and its history are a valuable source of information for applications to offer you 
+<p>Your location and its history are a valuable source of information for applications to offer you
 a more contextual user experience.</p>
 <p>You could for example do the following:</p>
 <ul>
 <li>Share your current location (temporarily) with a friend without sending it to a different server.</li>
-<li>Annotate your location history with the mode of transport you were using at that time. 
-This allows to analyse after a certain period your mobility behavior and 
-whether using a different mode would’ve saved you time and money 
-(like https://savewithcarsharing.be/, but then without manual data entry and with client-side query evaluation).</li>
+<li>Annotate your location history with the mode of transport you were using at that time.
+This allows to analyse after a certain period your mobility behavior and
+whether using a different mode would’ve saved you time and money
+(like <a href="https://savewithcarsharing.be/">https://savewithcarsharing.be/</a>, but then without manual data entry and with client-side query evaluation).</li>
 <li>Use your location history to check where a certain picture in your pod was taken.</li>
 <li>Look-up when you were at a certain location in the past.</li>
 </ul>
 <h2 id="approved-solution">Approved solution</h2>
 <p>We developed a <a href="https://github.com/SolidLabResearch/LocationHistory">Web app</a> that
 allow users to capture their location from browser after logging in with their WebID.
-The app stores the user's raw location data as RDF which is validated against a SHACL shape. 
-The user can also request location from other users using their WebID. 
+The app stores the user's raw location data as RDF which is validated against a SHACL shape.
+The user can also request location from other users using their WebID.
 These requests can be approved or revoked.</p>
 <p>You find the live version <a href="https://solidlabresearch.github.io/LocationHistory/">here</a> and
 a screencast of a demo <a href="https://cloud.ilabt.imec.be/index.php/s/YbiRfCz7LCSseNy">here</a>.

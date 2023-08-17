@@ -545,27 +545,27 @@ Report writer:
 <h1 id="drag-drop-form-builder-to-build-basic-rdf-form-definition-permalink">Drag &amp; drop form builder to build basic RDF form definition (<a href="https://github.com/SolidLabResearch/Challenges/blob/main/reports/drag-drop-form-builder-to-build-basic-rdf-form-definition.md">permalink</a>)</h1>
 <p>The corresponding challenge is <a href="https://github.com/SolidLabResearch/Challenges/issues/64">#64</a>.</p>
 <h2 id="problem">Problem</h2>
-<p>Create a drag &amp; drop form builder that combines HTML form input fields, and 
-generates an RDF form definition of the created form. 
+<p>Create a drag &amp; drop form builder that combines HTML form input fields, and
+generates an RDF form definition of the created form.
 This RDF form definition should be stored in a preferred Solid location.</p>
-<p>The basic idea is to start with a Google Forms-like interface but for the generation of RDF data. 
+<p>The basic idea is to start with a Google Forms-like interface but for the generation of RDF data.
 This application is one application that can be used in an environment in which:</p>
 <ul>
 <li>Form builders can generate an RDF form definition.</li>
 <li>Form renders that can render an RDF form for end users (e.g. as HTML or as a text menu).</li>
 <li>Form viewers that can view the generated RDF in a human friendly way.</li>
 </ul>
-<p>These three components can work together, for example, so that </p>
+<p>These three components can work together, for example, so that</p>
 <ol>
-<li>a form builder creates a Doodle form, </li>
-<li>a form renderer makes a HTML version to input the data, and </li>
+<li>a form builder creates a Doodle form,</li>
+<li>a form renderer makes a HTML version to input the data, and</li>
 <li>a form viewer generates a nice read-only view.</li>
 </ol>
 <p>See also the report <a href="../form-renderer-to-view-form-store-data/">"Form renderer that to view RDF form and store filled-in data in pod"</a>.</p>
 <h2 id="approved-solution">Approved solution</h2>
-<p>We developed a <a href="https://github.com/smessie/FormGenerator">Web app</a> 
-that allows users to create form definitions and share them with other users. 
-The generated form definition is stored in a user's pod as RDF and 
+<p>We developed a <a href="https://github.com/smessie/FormGenerator">Web app</a>
+that allows users to create form definitions and share them with other users.
+The generated form definition is stored in a user's pod as RDF and
 can then be used together with a form renderer to input data.</p>
 <p>Below you find a screenshot where a form is defined with the following fields:</p>
 <ul>

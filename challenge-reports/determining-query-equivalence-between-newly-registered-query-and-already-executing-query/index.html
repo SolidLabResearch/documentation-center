@@ -559,23 +559,23 @@ You can reuse the pitch of the challenge, but check if you need to make changes.
 For example, it might happen that the approved solution does more than what the original pitch requested.
 -->
 
-<p>The <a href="https://github.com/argahsuknesib/solid-stream-aggregator">Solid Stream Aggregator</a> is a service that 
-aggregates data streams from Solid pods and stores the aggregation in another pod. 
-This aggregation uses 
-the <a href="https://woutslabbinck.github.io/LDESinLDP/">LDES in LDP</a> specification. 
-The user can register queries into the aggregator and 
-generate a continuous materialized view over the streams stored in the pods. 
-Moreover, multiple users can register the same query to the aggregator. 
-On registering the same query, 
-the aggregator currently instantiates a new process to compute and develop a continuous view. 
-However, such an approach is resource-consuming and 
-hinders the scalability of the aggregator. 
-Therefore, there is a need for the aggregator to determine 
-if a newly registered query is similar to an already executing query, and 
-if so, not execute the query again but reuse the results of the already executing query. 
-The Query Registry component of the aggregator keeps a record of 
-the queries that are being executed currently and 
-can be employed to identify query equivalence between 
+<p>The <a href="https://github.com/argahsuknesib/solid-stream-aggregator">Solid Stream Aggregator</a> is a service that
+aggregates data streams from Solid pods and stores the aggregation in another pod.
+This aggregation uses
+the <a href="https://woutslabbinck.github.io/LDESinLDP/">LDES in LDP</a> specification.
+The user can register queries into the aggregator and
+generate a continuous materialized view over the streams stored in the pods.
+Moreover, multiple users can register the same query to the aggregator.
+On registering the same query,
+the aggregator currently instantiates a new process to compute and develop a continuous view.
+However, such an approach is resource-consuming and
+hinders the scalability of the aggregator.
+Therefore, there is a need for the aggregator to determine
+if a newly registered query is similar to an already executing query, and
+if so, not execute the query again but reuse the results of the already executing query.
+The Query Registry component of the aggregator keeps a record of
+the queries that are being executed currently and
+can be employed to identify query equivalence between
 a newly registered query and an already executing one.</p>
 <h2 id="approved-solution">Approved solution</h2>
 <!--
@@ -583,19 +583,21 @@ Provide information about the approved solution:
 names of tools/libraries created, repos, and so on.
 -->
 
-<p>We developed a <a href="https://github.com/argahsuknesib/rspql-query-equivalence">library</a> to determine 
-the equivalence between two 
-<a href="https://re.public.polimi.it/retrieve/e0c31c0e-f3df-4599-e053-1705fe0aef77/RSP-QL-Semantics-A-Unifying%20Query%20Model%20to%20Explain%20Heterogeneity_11311-964309_Della%20Valle.pdf">RSP-QL</a> 
+<p>We developed a <a href="https://github.com/argahsuknesib/rspql-query-equivalence">library</a> to determine
+the equivalence between two
+<a href="https://re.public.polimi.it/retrieve/e0c31c0e-f3df-4599-e053-1705fe0aef77/RSP-QL-Semantics-A-Unifying%20Query%20Model%20to%20Explain%20Heterogeneity_11311-964309_Della%20Valle.pdf">RSP-QL</a>
 queries.
 RSP-QL is an extension of SPARQL to support continuous querying of data streams.
 These queries can work with timestamp-based RDF Stream Processing (RSP) engines.
 We developed <a href="https://github.com/argahsuknesib/query-equivalence-demo">this demo</a> to show how the library works.</p>
-<p>We made the following important technological decisions and assumptions:
-- Since we are only interested in demonstrating the functionality of the Query Registry of the Solid Stream Aggregator, 
-our demo doesn't include the actual aggregation of the different data streams. 
-In case you wish to run the aggregator with pods and 
-are interested in the aggregation results, 
-you can check out <a href="https://github.com/SolidLabResearch/aggregator-description-demo">this demo</a>.</p>
+<p>We made the following important technological decisions and assumptions:</p>
+<ul>
+<li>Since we are only interested in demonstrating the functionality of the Query Registry of the Solid Stream Aggregator,
+our demo doesn't include the actual aggregation of the different data streams.
+In case you wish to run the aggregator with pods and
+are interested in the aggregation results,
+you can check out <a href="https://github.com/SolidLabResearch/aggregator-description-demo">this demo</a>.</li>
+</ul>
 <h2 id="user-flow">User flow</h2>
 <!--
 Describe a concrete user flow with the approved solution.
@@ -612,23 +614,34 @@ Complete the following sections:
 </ul>
 <h3 id="steps">Steps</h3>
 <ol>
-<li>Clone the repository via
-   <code>shell
-   git clone https://github.com/argahsuknesib/query-equivalence-demo.git</code></li>
-<li>Navigate to the folder <code>query-equivalence-demo</code> via
-   <code>shell
-   cd query-equivalence-demo</code></li>
-<li>Install the dependencies via
-   <code>shell
-   npm i</code></li>
-<li>Start the Community Solid Server instance that hosts data used by the queries via
-   <code>shell
-   npm run start-solid-server</code></li>
-<li>Start the aggregator in a separate terminal via
-   <code>shell
-   npm run start demo</code></li>
-<li>Register the first query
-   <code>sparql
+<li>Clone the repository via</li>
+</ol>
+<p><code>shell
+   git clone https://github.com/argahsuknesib/query-equivalence-demo.git</code></p>
+<ol>
+<li>Navigate to the folder <code>query-equivalence-demo</code> via</li>
+</ol>
+<p><code>shell
+   cd query-equivalence-demo</code></p>
+<ol>
+<li>Install the dependencies via</li>
+</ol>
+<p><code>shell
+   npm i</code></p>
+<ol>
+<li>Start the Community Solid Server instance that hosts data used by the queries via</li>
+</ol>
+<p><code>shell
+   npm run start-solid-server</code></p>
+<ol>
+<li>Start the aggregator in a separate terminal via</li>
+</ol>
+<p><code>shell
+   npm run start demo</code></p>
+<ol>
+<li>Register the first query</li>
+</ol>
+<p><code>sparql
    PREFIX saref: &lt;https://saref.etsi.org/core/&gt; 
    PREFIX dahccsensors: &lt;https://dahcc.idlab.ugent.be/Homelab/SensorsAndActuators/&gt;
    PREFIX : &lt;https://rsp.js/&gt;
@@ -638,16 +651,16 @@ Complete the following sections:
    WHERE{
        WINDOW :w1 { ?s saref:hasValue ?o .
                    ?s saref:relatesToProperty dahccsensors:wearable.bvp .}
-   }</code>
-   with the aggregator in a new terminal via
-   <code>shell
-   npm run query-one</code>
-   The aggregator outputs the message<blockquote>
-<p>The query you have registered is not already executing.</p>
+   }</code></p>
+<p>with the aggregator in a new terminal via</p>
+<p><code>shell
+   npm run query-one</code></p>
+<p>The aggregator outputs the message</p>
+<blockquote>
+<p>The query you have registered is not already executing.
+7. Register the second query</p>
 </blockquote>
-</li>
-<li>Register the second query
-   <code>sparql
+<p><code>sparql
    PREFIX saref: &lt;https://saref.etsi.org/core/&gt;
    PREFIX dahccsensors: &lt;https://dahcc.idlab.ugent.be/Homelab/SensorsAndActuators/&gt;
    PREFIX : &lt;https://rsp.js/&gt;
@@ -656,20 +669,19 @@ Complete the following sections:
    FROM NAMED WINDOW :w1 ON STREAM &lt;http://localhost:3000/dataset_participant1/data/&gt; [RANGE 10 STEP 2]
    WHERE{
        WINDOW :w1 { ?s saref:hasTimestamp ?timestamp .}
-   }</code>
-   with the aggregator via
-   <code>shell
-   npm run query-two</code>
-   The aggregator outputs the same message<blockquote>
+   }</code></p>
+<p>with the aggregator via</p>
+<p><code>shell
+   npm run query-two</code></p>
+<p>The aggregator outputs the same message</p>
+<blockquote>
 <p>The query you have registered is not already executing.</p>
 </blockquote>
-</li>
-</ol>
-<p>Both queries are on the same data stream source, 
-   but the basic graph patterns are not isomorphic. 
+<p>Both queries are on the same data stream source,
+   but the basic graph patterns are not isomorphic.
    Therefore, the aggregator registers both queries.
-8. Register the third query
-   <code>sparql
+8. Register the third query</p>
+<p><code>sparql
    PREFIX saref: &lt;https://saref.etsi.org/core/&gt; 
    PREFIX dahccsensors: &lt;https://dahcc.idlab.ugent.be/Homelab/SensorsAndActuators/&gt;
    PREFIX : &lt;https://rsp.js/&gt;
@@ -679,15 +691,16 @@ Complete the following sections:
    WHERE{
        WINDOW :w1 { ?s saref:hasValue ?o .
                    ?s saref:relatesToProperty dahccsensors:wearable.heartRate .}
-   }</code>
-   with the aggregator via
-   <code>shell
-   npm run query-three</code>
-   The aggregator outputs the message</p>
+   }</code></p>
+<p>with the aggregator via</p>
+<p><code>shell
+   npm run query-three</code></p>
+<p>The aggregator outputs the message</p>
 <blockquote>
 <p>The query you have registered is not already executing.
-9. Register the fourth query
-   <code>sparql
+9. Register the fourth query</p>
+</blockquote>
+<p><code>sparql
    PREFIX saref: &lt;https://saref.etsi.org/core/&gt;
    PREFIX dahccsensors: &lt;https://dahcc.idlab.ugent.be/Homelab/SensorsAndActuators/&gt;
    PREFIX : &lt;https://rsp.js/&gt;
@@ -699,38 +712,46 @@ Complete the following sections:
            ?subject saref:relatesToProperty dahccsensors:wearable.heartRate .
            ?subject saref:hasValue ?object . 
        }
-   }</code>
-   with the aggregator via
-   <code>shell
-   npm run query-four</code>
-   The aggregator outputs the message
-The query you have registered is already executing.</p>
-</blockquote>
-<p>These queries are on the same data stream source and 
-   the basic graph patterns are isomorphic. 
-   Therefore, the aggregator will execute only one of the queries.
-10. Register the fifth query
-   <code>sparql
-   PREFIX saref: &lt;https://saref.etsi.org/core/&gt; 
-   PREFIX dahccsensors: &lt;https://dahcc.idlab.ugent.be/Homelab/SensorsAndActuators/&gt;
-   PREFIX : &lt;https://rsp.js/&gt;
-   REGISTER RStream &lt;output&gt; AS
-   SELECT (AVG(?object) AS ?averageHR1)
-   FROM NAMED WINDOW :w1 ON STREAM &lt;http://localhost:3000/dataset_participant1/data/&gt; [RANGE 10 STEP 2]
-   WHERE{
-       WINDOW :w1 {
-           ?subject saref:relatesToProperty dahccsensors:wearable.Accelerometer .
-           ?subject saref:hasValue ?object . 
-       }
-   }</code>
-   with the aggregator via
-   <code>shell
-   npm run query-five</code>
-   The aggregator outputs the message</p>
+   }</code></p>
+<p>with the aggregator via</p>
+<p><code>shell
+   npm run query-four</code></p>
+<p>The aggregator outputs the message</p>
 <blockquote>
-<p>The query you have registered is not already executing.
-11. Register the sixth query
-   <code>sparql
+<p>The query you have registered is already executing.</p>
+</blockquote>
+<p>These queries are on the same data stream source and
+   the basic graph patterns are isomorphic.
+   Therefore, the aggregator will execute only one of the queries.
+10. Register the fifth query</p>
+<pre><code>```sparql
+PREFIX saref: &lt;https://saref.etsi.org/core/&gt; 
+PREFIX dahccsensors: &lt;https://dahcc.idlab.ugent.be/Homelab/SensorsAndActuators/&gt;
+PREFIX : &lt;https://rsp.js/&gt;
+REGISTER RStream &lt;output&gt; AS
+SELECT (AVG(?object) AS ?averageHR1)
+FROM NAMED WINDOW :w1 ON STREAM &lt;http://localhost:3000/dataset_participant1/data/&gt; [RANGE 10 STEP 2]
+WHERE{
+    WINDOW :w1 {
+        ?subject saref:relatesToProperty dahccsensors:wearable.Accelerometer .
+        ?subject saref:hasValue ?object . 
+    }
+}
+```
+
+with the aggregator via
+
+```shell
+npm run query-five
+```
+
+The aggregator outputs the message
+&gt; The query you have registered is not already executing.
+</code></pre>
+<ol>
+<li>Register the sixth query</li>
+</ol>
+<p><code>sparql
    PREFIX saref: &lt;https://saref.etsi.org/core/&gt; 
    PREFIX dahccsensors: &lt;https://dahcc.idlab.ugent.be/Homelab/SensorsAndActuators/&gt;
    PREFIX : &lt;https://rsp.js/&gt;
@@ -742,15 +763,17 @@ The query you have registered is already executing.</p>
            ?subject saref:relatesToProperty dahccsensors:wearable.Accelerometer .
            ?subject saref:hasValue ?object .
        }
-   }</code>
-   with the aggregator via
-      <code>shell
-      npm run query-six</code>
-   The aggregator outputs the message
-The query you have registered is not already executing.</p>
+   }</code></p>
+<p>with the aggregator via</p>
+<p>```shell
+      npm run query-six</p>
+<p>```</p>
+<p>The aggregator outputs the message</p>
+<blockquote>
+<p>The query you have registered is not already executing.</p>
 </blockquote>
-<p>For these two queries, the basic graph patterns are isomorphic, 
-   but the data stream sources are different. 
+<p>For these two queries, the basic graph patterns are isomorphic,
+   but the data stream sources are different.
    In this case, the aggregator will execute both queries.</p>
 <h3 id="postconditions">Postconditions</h3>
 <p>None.</p>
@@ -769,7 +792,7 @@ You can create a new challenge/scenario for each idea.
 -->
 
 <ul>
-<li>Support query containment as well as sharing of intermediate RDF result sharing 
+<li>Support query containment as well as sharing of intermediate RDF result sharing
   between data streams.</li>
 </ul>
 <h2 id="lessons-learned-about-developer-experience">Lessons learned about developer experience</h2>
