@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ## Unreleased
 
+## [0.0.9] - 2023-08-21
+
+### Added
+- Sort items in follow-up actions list
+
 ## [0.0.8] - 2023-08-11
 
 ### Added
@@ -52,6 +57,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 - Initial content
 - GitHub pages deployment
 
+[0.0.9]: https://github.com/SolidLabResearch/documentation-center/compare/v0.0.8...v0.0.9
 [0.0.8]: https://github.com/SolidLabResearch/documentation-center/compare/v0.0.7...v0.0.8
 [0.0.7]: https://github.com/SolidLabResearch/documentation-center/compare/v0.0.6...v0.0.7
 [0.0.6]: https://github.com/SolidLabResearch/documentation-center/compare/v0.0.5...v0.0.6
