@@ -149,10 +149,10 @@ function generateFollowUpActionsListMarkdown(bindings) {
     }
   }
 
-  let markdown = generateFollowUpActionSection(css, 'Community Solid Server');
-  markdown += generateFollowUpActionSection(comunica, 'Comunica');
-  markdown += generateFollowUpActionSection(solidlabLibJs, 'SolidLabLib.js');
-  markdown += generateFollowUpActionSection(other, 'Other');
+  let markdown = generateFollowUpActionSection(css.sort(sortOnTitle), 'Community Solid Server');
+  markdown += generateFollowUpActionSection(comunica.sort(sortOnTitle), 'Comunica');
+  markdown += generateFollowUpActionSection(solidlabLibJs.sort(sortOnTitle), 'SolidLabLib.js');
+  markdown += generateFollowUpActionSection(other.sort(sortOnTitle), 'Other');
 
   return markdown;
 }
@@ -272,4 +272,17 @@ function mergeDuplicateReports(bindings) {
   }
 
   return Object.values(reports);
+}
+
+function sortOnTitle(a, b) {
+  const titleA = a.title;
+  const titleB = b.title;
+
+  if (titleA < titleB) {
+    return -1;
+  } else if (titleA > titleB) {
+    return 1;
+  } else {
+    return 0;
+  }
 }
