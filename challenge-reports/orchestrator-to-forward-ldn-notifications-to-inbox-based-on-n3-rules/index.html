@@ -15,7 +15,7 @@
     
     
       
-        <title>App that lists apps and tooling - SolidLab Documentation Center</title>
+        <title>Orchestrator to forward ldn notifications to inbox based on n3 rules - SolidLab Documentation Center</title>
       
     
     
@@ -57,7 +57,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#app-that-lists-apps-and-tooling-permalink" class="md-skip">
+        <a href="#orchestrator-to-forward-ldn-notifications-to-ldn-inbox-based-on-n3-rules-permalink" class="md-skip">
           Skip to content
         </a>
       
@@ -107,7 +107,7 @@ Important: this is an initial version of our documentation center. Expect a lot 
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              App that lists apps and tooling
+              Orchestrator to forward ldn notifications to inbox based on n3 rules
             
           </span>
         </div>
@@ -508,6 +508,47 @@ Important: this is an initial version of our documentation center. Expect a lot 
 </li>
       
         <li class="md-nav__item">
+  <a href="#lessons-learned-about-developer-experience" class="md-nav__link">
+    Lessons learned about developer experience
+  </a>
+  
+    <nav class="md-nav" aria-label="Lessons learned about developer experience">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#solid-application-development-is-not-only-about-web-programming" class="md-nav__link">
+    Solid application development is not only about Web programming
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#logic-and-reasoning-can-be-external-to-your-implementation" class="md-nav__link">
+    Logic and reasoning can be external to your implementation
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#possible-to-provide-very-limited-remote-execution-near-or-inside-pod" class="md-nav__link">
+    Possible to provide very limited remote execution near or inside pod
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#remote-server-side-solid-data-management-is-in-general-not-a-solved-issue" class="md-nav__link">
+    Remote server-side Solid data management is in general not a solved issue
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#contributors" class="md-nav__link">
     Contributors
   </a>
@@ -535,64 +576,200 @@ Leave this in comments!
 It's possible to have multiple people per role.
 
 Challenge/scenario creator:
-  - https://id.inrupt.com/jeswr
+  - https://patrickhochstenbach.net/profile/card#me
 Solution creator:
-  - https://pieterheyvaert.com/#me
+  - https://patrickhochstenbach.net/profile/card#me
 Report writer:
   - https://pieterheyvaert.com/#me
 -->
 
-<h1 id="app-that-lists-apps-and-tooling-permalink">App that lists apps and tooling (<a href="https://github.com/SolidLabResearch/Challenges/blob/main/reports/app-that-lists-apps-and-tooling.md">permalink</a>)</h1>
-<p>The corresponding challenge is <a href="https://github.com/SolidLabResearch/Challenges/issues/30">#30</a>.</p>
+<h1 id="orchestrator-to-forward-ldn-notifications-to-ldn-inbox-based-on-n3-rules-permalink">Orchestrator to forward LDN notifications to LDN inbox based on N3 rules (<a href="https://github.com/SolidLabResearch/Challenges/blob/main/reports/orchestrator-to-forward-ldn-notifications-to-inbox-based-on-n3-rules.md">permalink</a>)</h1>
+<p>The corresponding challenge is <a href="https://github.com/SolidLabResearch/Challenges/issues/49">#49</a>.</p>
 <h2 id="problem">Problem</h2>
-<p>The goal is for the Solid project to "eat its own dog food" by having an app/interface in which users can see
-which apps and developer tooling exist within the ecosystem.</p>
-<p>Concretely:</p>
+<p>A maintainer of a <a href="https://www.w3.org/TR/ldn/">Linked Data Notifications</a> (LDN) inbox wants to
+see some automated processes happening
+when particular LDN notifications appear in one of her inboxes or are being sent by her.
+Possible automated processes include:</p>
 <ul>
-<li>There exists an ontology with which apps and tooling are described.</li>
-<li>The data is published and maintained in a sustainable way.</li>
-<li>Developers are incentivied to keep an up-to-date record of their work
-or this can be entirely automated for them by scraping data from
-wherever they are doing their work such as GitHub, Gitlab, and so on.</li>
+<li>Auto reply to some messages</li>
+<li>Forward the notification to the LDN inbox of another autonomous agent</li>
+<li>Append outgoing messages to an outbox/sent container</li>
+<li>Generate a new notification to be sent to a particular LDN inbox</li>
 </ul>
-<p>In the long term, I would envision this to be an app store for Solid apps and a wiki for developer tooling/sdks.</p>
+<p>What should happen after receiving an incoming our outgoing message is described by an N3 rules.
+These rules could require read access to the pod (for example, to check the existence of a resource on the pod).
+An example of a rule in natural language is</p>
+<pre><code class="language-text">IF inbox I contains a notification about a resource A, 
+AND resource A exists on pod P, 
+THEN generate new notification and send it to inbox X.
+</code></pre>
+<p>The automated processes and rules are executed by the orchestrator, which is an autonomous agent, on behalf of the maintainer.</p>
 <h2 id="approved-solution">Approved solution</h2>
-<p>We developed a <a href="https://github.com/KNowledgeOnWebScale/solid-app-store/">Web app</a> that
-shows users a lists of apps and libraries.
-Users can filter on category and search on the names and descriptions of apps and libraries.
-There are also <a href="https://github.com/KNowledgeOnWebScale/solid-app-store#how-to-add-app-to-store">shapes</a>
-for how information about the apps should be published.
-You find a live version of the app <a href="https://solid-app-store.netlify.app/">here</a>.</p>
-<p>Below you find a screenshot of the app.</p>
-<p><img alt="img.png" src="../img/solid-app-store.png" /></p>
+<p>We developed <a href="https://github.com/eyereasoner/Koreografeye">Koreografeye</a> that allows users to
+run automated processed against Solid pods.
+Koreografeye provides two commands: <code>orch</code> for the orchestrator and
+<code>pol</code> for the policy executor.
+The <code>orch</code> command takes the input data,<br />
+use the N3 rules to decide what to do with the data, and
+put the results output folder.
+The <code>pol</code> command takes the output of the <code>orch</code> command and
+executes the requested policies defined with the N3 rules.</p>
+<!--
+Provide a list of important technical decisions and assumptions.
+-->
+<p>We made the following important technological decisions and assumptions:</p>
+<ul>
+<li>
+<p>We expect the solution to be part of a larger existing framework.
+Koreografeye doesn't implement some features on purpose such as
+scheduling, rate limits, input and outputs, priorities, and so on.
+For these features there are already existing tools that provide that.
+On other words Koreografeye should be able to be just one added component to for example an Apache Nifi installation.</p>
+</li>
+<li>
+<p>The Composition of Koreografeye parts such as input, orchestration and
+policy execution are possible via the command line.
+That way it's programming language-independent.
+The JavaScript API is just an added feature and not the core of the design.</p>
+</li>
+<li>
+<p>Developers can create a lot of plugins for policy enforcement and reasoner implementations.
+Component.JS was used to facilitate this.</p>
+</li>
+<li>
+<p>Koreografeye makes a strict separation between reasoning and policy execution.
+  We don't advise to create any side effects in the reasoning part for two reasons:</p>
+</li>
+<li>The rule book that the reasoner gets as input can be from external sources.
+    We don't want arbitrary execution of code.</li>
+<li>
+<p>During the reasoning phase there is little control over possible side effects,
+    such as when they are executed, in which order and how often.</p>
+</li>
+<li>
+<p>Retrieving input from a (Solid) source is a <a href="https://solidproject.org/TR/protocol#reading-resources">solved issue</a>.
+  The Koreografeye starts when an RDF resource is copied into a local storage location accessible for Koreografeye,</p>
+</li>
+<li>Retrieving the rule book from an external source is a <a href="https://solidproject.org/TR/protocol#reading-resources">solved issue</a>.
+  Koreografeye expects a local storage location with zero or more rule book N3 or N3S (RDF Surfaces) files.</li>
+<li>The order in which policy enforcements are executed is not relevant.</li>
+<li>Rule books don't interfere with each other.
+  Each rule book gets a new copy of the RDF input data</li>
+</ul>
 <h2 id="user-flow">User flow</h2>
+<!--
+Describe a concrete user flow with the approved solution.
+Complete the following sections:
+-->
+
 <h3 id="actorsactresses">Actors/actresses</h3>
 <ul>
-<li>Web app</li>
-<li>User of the application</li>
+<li>User of Koreografeye</li>
 </ul>
 <h3 id="preconditions">Preconditions</h3>
-<p>None.</p>
+<ul>
+<li>User has Node.js installed.</li>
+</ul>
 <h3 id="steps">Steps</h3>
 <ol>
-<li>The user opens the Web app.</li>
-<li>The user searches for "editor".</li>
+<li>
+<p>Clone the <a href="https://github.com/eyereasoner/KoreografeyeDemo">demo repo</a> via</p>
+<p><code>shell
+git clone https://github.com/eyereasoner/KoreografeyeDemo.git`</code></p>
+</li>
+<li>
+<p>Install dependencies via</p>
+</li>
 </ol>
+<p><code>shell
+   npm i</code></p>
+<ol>
+<li>Run the <code>orch</code> command to process all RDF resources in the <code>in</code> directory using the <code>ldn.n3</code> rules file via</li>
+</ol>
+<p><code>shell
+   npm run orch:ldn</code></p>
+<p>This generates the file <code>out/demo.ttl</code> as output containing the input RDF resource plus injected policies.
+4. Run the <code>pol</code> command against the output of step 3 via</p>
+<p><code>shell
+   npm run pol</code></p>
+<p>This will send a notification to <a href="https://httpbin.org/post">https://httpbin.org/post</a>
+   using the <a href="https://github.com/eyereasoner/Koreografeye/blob/main/src/policy/plugin/SendNotificationPlugin.ts">SendNotificationPlugin</a>.</p>
 <h3 id="postconditions">Postconditions</h3>
-<ul>
-<li>The app shows two apps: "solideditor" and "waceditor".</li>
-</ul>
+<p>If <a href="https://httpbin.org/post">https://httpbin.org/post</a> pointed to a real Solid pod inbox,
+then the notification would be available there.</p>
 <h2 id="follow-up-actions">Follow-up actions</h2>
-<p>None.</p>
-<h2 id="future-work">Future work</h2>
+<!--
+List all concrete follow-up actions that someone has to do.
+For example, adding helper code from the solution to Comunica.
+-->
+
 <ul>
-<li>Users can set their own sources where the app store fetches the information about apps and libraries.
-Now this is hard-coded.</li>
+<li>Integrate the <a href="https://github.com/ErfgoedPod/evno">Event Notifications Typescript library</a> or
+<a href="https://github.com/SolidLabResearch/Bashlib/">Bashlib</a> into Koreografeye to
+provide out-of-the-box importing of notifications.
+This is now an external dependency.</li>
+<li>The current implementation is single threaded.
+Make options to specify how many threads can be used to execute the policies.</li>
 </ul>
+<h2 id="future-work">Future work</h2>
+<!--
+List ideas for future work.
+These ideas don't have to be concrete.
+You can create a new challenge/scenario for each idea.
+-->
+
+<ul>
+<li>Current systems makes no assumptions on how policies should be executed, in which order, and what to do when policies fail.
+Align with other groups to find a solution on how a composition of policies should be executed.</li>
+</ul>
+<h2 id="lessons-learned-about-developer-experience">Lessons learned about developer experience</h2>
+<!--
+List all lessons learned about your experience as a Solid developer:
+issues you encountered, tasks that could be automated or could be made easier and so on.
+-->
+
+<h3 id="solid-application-development-is-not-only-about-web-programming">Solid application development is not only about Web programming</h3>
+<p>For real Solid integration processes need to be automated.
+Resources need to be also made available, updated, deleted when no user is available and no web browser is opened.
+In a decentralized world
+we can't expect that Solid pods will keep on adding logic to provide this automation steps.
+External services will provide this automation capacity.</p>
+<h3 id="logic-and-reasoning-can-be-external-to-your-implementation">Logic and reasoning can be external to your implementation</h3>
+<p>The good part of having logic external to your application is that programmers only need to worry about
+their own problem domain.
+For example, I want that LDN notifications that are send to my pod are forwarded to my email address.
+This logic shouldn't be implemented by every Solid application that sends notifications to my pod.
+It's of no concern to these applications what kind of extra business rules are required
+when a notification arrives in the LDN inbox.</p>
+<p>The bad part is like everything else in a decentralized world:</p>
+<ul>
+<li>Who keeps an overview of what process flows are running on your data?</li>
+<li>Who keeps an overview of resource dependencies?</li>
+</ul>
+<p>For example, can I delete/update a resource when I don't know if another process still needs it?</p>
+<h3 id="possible-to-provide-very-limited-remote-execution-near-or-inside-pod">Possible to provide very limited remote execution near or inside pod</h3>
+<p>It is possible to provide very limited remote execution near or inside a Solid pod when
+logic and handling side effects can be separated.
+An orchestrator could in principle also run inside a pod.
+But most probably one wants to provide it very limited capabilities to prevent users to run arbitrary code
+on the pod server itself.
+For example, an orchestrator that works only as an LDN inbox rule engine like one has in
+Outlook or Thunderbird would allow only moving incoming notifications to a specific container.</p>
+<h3 id="remote-server-side-solid-data-management-is-in-general-not-a-solved-issue">Remote server-side Solid data management is in general not a solved issue</h3>
+<p>Although with <a href="https://github.com/SolidLabResearch/Bashlib">Bashlib</a>
+we have a command line tool to access a Solid pod and manage its content,
+remote server-side Solid data management is in general not a solved issue.
+Bashlib requires assumptions about specialised authentication methods for each Solid implementation.
+We currently depend on an authentication mechanism with
+<a href="https://communitysolidserver.github.io/CommunitySolidServer/7.x/usage/client-credentials/">tokens</a>
+that only works for
+the <a href="https://github.com/CommunitySolidServer/CommunitySolidServer">Community Solid Server</a>.
+These tokens allow doing authenticated requests without the need for the user to log in every certain amount of time.
+There are other pod servers that also provide such tokens, but they have their own mechanism to do this.</p>
 <h2 id="contributors">Contributors</h2>
 <ul>
-<li>Challenge: Jesse Wright</li>
-<li>Solution: Pieter Heyvaert</li>
+<li>Challenge: Patrick Hochstenbach</li>
+<li>Solution: Patrick Hochstenbach</li>
 <li>Report: Pieter Heyvaert</li>
 </ul>
 
